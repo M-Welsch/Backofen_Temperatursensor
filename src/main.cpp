@@ -1,6 +1,9 @@
 #include <Arduino.h>
 #include <string.h>
+
 #include <ESP8266WiFi.h>
+#include <DNSServer.h>
+#include <WiFiManager.h>
 #include <PubSubClient.h>
 #include "display.h"
 #include "temperature_sensor.h"
@@ -8,8 +11,7 @@
 #include "logger.h"
 #include "mqtt.h"
 
-#define wifi_ssid "NETGEAR"
-#define wifi_password "XL12ABZXYGKIDO"
+#define WIFI_HOTSPOT_NAME "BackofenSensor"
 
 #define mqtt_server "192.168.0.2"
 #define mqtt_user "iot"
@@ -22,10 +24,16 @@ Temperature_Sensor temperature_sensor;
 BatteryMonitor battery_monitor;
 Status status;
 
+void wifiConnection() {
+  WiFiManager wifiManager;
+  wifiManager.autoConnect(WIFI_HOTSPOT_NAME);
+}
+
 void setup(void) {
   Serial.begin(9600);
   display.setup();
   temperature_sensor.setup();
+  wifiConnection();
   mqttSetup();
 }
 

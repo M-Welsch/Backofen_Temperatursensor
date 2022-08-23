@@ -33,7 +33,7 @@ void setup_wifi() {
 }
 
 void mqttSetup() {
-    setup_wifi();
+    //setup_wifi();
     client.setServer(mqtt_server, 1883);   
 }
 
