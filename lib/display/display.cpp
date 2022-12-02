@@ -49,6 +49,21 @@ void Display::show_status(const struct Status *status) {
     u8g2.sendBuffer();
 }
 
+void Display::show_lines(String line1, String line2, String line3, String line4) {
+    char buffer[32];
+    line1.toCharArray(buffer, 32);
+    u8g2.clearBuffer();
+    u8g2_prepare();
+    line1.toCharArray(buffer, 32);
+    show_line(buffer, 0);
+    line2.toCharArray(buffer, 32);
+    show_line(buffer, 1);
+    line3.toCharArray(buffer, 32);
+    show_line(buffer, 2);
+    line4.toCharArray(buffer, 32);
+    show_line(buffer, 3);
+    u8g2.sendBuffer();
+}
 
 void Display::show_undervoltage(const float voltage) {
     char buffer[32];

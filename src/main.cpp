@@ -27,14 +27,19 @@ Status status;
 void wifiConnection() {
   WiFiManager wifiManager;
   wifiManager.autoConnect(WIFI_HOTSPOT_NAME);
+  IPAddress ip_address = WiFi.localIP();
+  ip_address.toString().toCharArray(status.ip_address, 16);
 }
 
 void setup(void) {
   Serial.begin(9600);
   display.setup();
+  display.show_lines("Hi!", "", "Wifi setup", "in progress ...");
   temperature_sensor.setup();
   wifiConnection();
+  display.show_lines("MQTT Setup", mqtt_server, mqtt_user, topic);
   mqttSetup();
+  delay(1000);
 }
 
 void undervoltage_check(const float voltage) {
